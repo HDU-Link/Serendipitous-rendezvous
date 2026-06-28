@@ -1,0 +1,137 @@
+% !TeX program = xelatex
+\documentclass{beamer}
+\usetheme{Madrid}
+
+% ===== 中文支持 =====
+\usepackage{xeCJK}
+\usepackage{ctex}
+\setCJKmainfont{STKaiti}
+\setCJKsansfont{STKaiti}
+\setCJKmonofont{STKaiti}
+
+
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\title[LaSalle不变集原理]{LaSalle不变集原理}
+%\author{非线性系统}
+\date{}
+\begin{document}
+	
+	%\begin{frame}
+	%	\titlepage
+	%\end{frame}
+	
+	\begin{frame}{正极限集 (Positive Limit Set)}
+		\begin{definition}
+			设 \(x(t)\) 是系统 \(\dot{x}=f(x)\) 的一个解. 若存在序列 \(\{t_n\}\) 满足
+		\begin{enumerate}
+			\item \(\lim\limits_{n\to\infty} t_n \to \infty\);
+			\item \(\lim\limits_{n\to\infty} x(t_n) \to p\),
+		\end{enumerate}
+		则称 \(p\) 为 \(x(t)\) 的一个\textbf{正极限点}.
+		
+		所有正极限点的集合称为 \(x(t)\) 的\textbf{正极限集}，记作 \(L^+\).
+		\end{definition}
+	\end{frame}
+	
+	\begin{frame}{不变集 (Invariant Set)}
+		\begin{definition}
+			\begin{itemize}
+			\item 设 \(x(t)\) 是 \(\dot{x}=f(x)\) 的解. 集合 \(M\) 称为\textbf{不变集}，若
+			\[
+			x(0)\in M \implies x(t)\in M,\quad \forall t\in\mathbb{R}.		
+			\]
+			\item 若仅对 \(\forall t\ge 0\) 成立，则称 \(M\) 为\textbf{正向不变集}.
+		\end{itemize}
+		\end{definition}
+		\begin{example}
+			\begin{itemize}
+				\item 平衡点和极限环都是不变集。
+				\item 集合 \(\Omega_c=\{x\in\mathbb{R}^n \mid V(x)\le c,\; \dot V\le 0\}\) 是不变集。
+			\end{itemize}
+		\end{example}
+	\end{frame}
+	
+	\begin{frame}{局部LaSalle 不变集原理}
+		\begin{definition}
+			若 \(\forall \epsilon>0,\exists T>0\) 使
+			$
+			\operatorname{dist}(x(t),M)<\epsilon,\ \forall t\ge T,
+			$
+			则称当 \(t\to\infty\) 时 \(x(t)\) \textbf{趋于} \(M\),
+			其中 \(\operatorname{dist}(x,M)=\inf_{p\in M}\|p-x\|\).
+		\end{definition}
+		\begin{theorem}
+			设 \(\Omega\subset D\) 是正向紧不变集，\(V:D\to\mathbb{R}\) 连续可微且 \(\dot V(x)\le 0\). 令
+			\[
+			E=\{x\in\Omega \mid \dot V(x)=0\},
+			\]
+			\(M\) 为 \(E\) 中的\textbf{最大不变集}，则当 \(t\to\infty\) 时始于 \(\Omega\) 的每一个解都趋于 \(M\).
+		\end{theorem}
+	\end{frame}
+	\begin{frame}
+		\begin{proof}
+			首先，可以证明对任何一条由 \(\Omega\) 出发的轨线 \(x(t)\) 皆有 \(\dot{V} \to 0\).
+			
+			考查从一点 \(x_0 \in \Omega\) 出发的轨线，对任意 \(t \geq 0\)，\(\dot{V} \leq 0\).
+			
+			同时 \(V(x)\) 在 \(\Omega\) 内对 \(x\) 连续（因为它对 \(x\) 可导），它在 \(\Omega\) 内有下界.
+			
+			由于轨线永远在正向不变集 \(\Omega\) 内，\(V(x(t))\) 对所有 \(t \geq 0\) 有下界.
+			
+			由\(\Omega\) 有界闭，\(V\) 有连续偏导数且\(\dot{x}\) 连续，可知 \(\dot{V}\) 一致连续.
+			
+			由Barbalat 引理，$
+			\dot{V}(x(t)) \to 0,$
+			这表明始于 \(\Omega\) 的所有轨线都趋于$E$.
+		\renewcommand{\qedsymbol}{}
+		\end{proof}
+		\medspace
+		\par 下面利用一个引理来证明所有轨线都不会收敛于 \(E\) 的其他地方，而只会收敛于 \(E\) 中的最大不变集 \(M\).
+		\begin{lemma}
+			若解\(x(t)\)有界且\(\forall t\ge0,\; x(t)\in D,\)则其正极限集 \(L^+\)是非空的不变闭集, 并且当 \(t\to\infty\) 时 \(x(t)\to L^+\).
+		\end{lemma}
+	\end{frame}
+	\begin{frame}
+		\begin{proof}[证明]
+			令 \(x(t)\) 始于 \(\Omega\)，则 \(x(t)\) 有界且 \(x(t)\in D\)。
+			由引理，\(L^+\) 非空、不变、闭，且当 \(t\to\infty\) 时 \(x(t)\to L^+\).
+			即 \(\forall p\in L^+\)，存在序列 \(t_n\to\infty\) 使 \(x(t_n)\to p\).
+		
+			由于 \(V\) 在闭集 \(\Omega\) 上连续且单调递减，极限
+			\[
+			\lim_{t\to\infty} V(x(t))=:a
+			\]
+			存在。
+			由连续性，
+			\[
+			V(p)=\lim_{n\to\infty} V(x(t_n))=a,\,\, \forall p\in L^+.
+			\]
+			故在 \(L^+\) 上恒有 \(V(x)=a\).
+			又因 \(L^+\) 是不变集，沿其轨线有
+			\[
+			\dot V(x)=0,
+			\]
+			同时注意到$M$是$E$中的最大不变集，因此
+			\medskip
+			\par \qquad \qquad \qquad \qquad \quad \ \ \ \qquad $
+			L^+ \subset M \subset E \subset \Omega.
+			$
+		\end{proof}
+	\end{frame}
+		\begin{frame}{全局LaSalle 不变集原理}
+		\begin{theorem}
+			若 \(V:D\to\mathbb{R}\) 连续可微，\(\dot V\le0\)，且 \(\|x\|\to\infty\) 时 \(V(x)\to\infty\)，\(E=\{\dot V=0\}\)，\(M\) 为 \(E\) 中最大不变集，则所有解全局渐近收敛于 \(M\).
+		\end{theorem}
+		\begin{corollary}
+			设 \(V:\mathbb{R}^n\to\mathbb{R}\) 连续可微、径向无界、正定，且
+			\[
+			\dot V(x)\le 0,\quad \forall x\in\mathbb{R}^n.
+			\]
+			若由 \(\dot V(x)=0\) 确定的最大不变集 \(E\) 仅包含 \(x=0\)，则原点\textbf{全局渐近稳定}.
+		\end{corollary}
+	\end{frame}
+\end{document}
